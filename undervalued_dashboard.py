@@ -48,7 +48,7 @@ st.markdown(f"### 💷 Showing {len(filtered_df)} undervalued streets")
 if not filtered_df.empty:
     # Add external hyperlink to Zoopla
     def create_link(postcode):
-        return f"[https://www.zoopla.co.uk](https://www.zoopla.co.uk/for-sale/property/?q={postcode})"
+        return f"https://www.zoopla.co.uk/for-sale/property/?q={postcode}"
 
     filtered_df["zoopla_link"] = filtered_df["street_key"].apply(lambda s: create_link(s.split("|")[-1].strip()))
 
