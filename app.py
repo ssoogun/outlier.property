@@ -79,17 +79,19 @@ def show_property_rows(dataframe, allow_fav_toggle=True, tab_id="main"):
 
         map_key = f"map_{row_id}_btn"
         if st.button("📍 See on Map", key=map_key):
-            st.map(pd.DataFrame({"lat": [row["Latitude"]], "lon": [row["Longitude"]]}), zoom=12)
+            st.map(pd.DataFrame({"latitude": [row["Latitude"]], "longitude": [row["Longitude"]]}), zoom=12)
 
         with st.expander("🔎 Local Insights"):
-            postcode = row["postcode"]
-            st.markdown(f'''
-- [Schools near {postcode}](https://www.google.com/search?q=schools+near+{postcode})
-- [Hospitals near {postcode}](https://www.google.com/search?q=hospitals+near+{postcode})
-- [Train stations near {postcode}](https://www.google.com/search?q=train+stations+near+{postcode})
-- [Future developments near {postcode}](https://www.google.com/search?q=future+developments+near+{postcode})
-- [HMO licensing {postcode}](https://www.google.com/search?q=HMO+licensing+{postcode})
-''')
+            postcode = row["postcode"].replace(" ", "+")
+            bcol1, bcol2, bcol3 = st.columns(3)
+            with bcol1:
+                st.link_button("🏫 Schools Nearby", f"https://www.google.com/search?q=schools+near+{postcode}")
+                st.link_button("🏥 Hospitals Nearby", f"https://www.google.com/search?q=hospitals+near+{postcode}")
+            with bcol2:
+                st.link_button("🚉 Train Stations", f"https://www.google.com/search?q=train+stations+near+{postcode}")
+                st.link_button("🏗️ Developments", f"https://www.google.com/search?q=future+developments+near+{postcode}")
+            with bcol3:
+                st.link_button("🏘️ HMO Licensing", f"https://www.google.com/search?q=HMO+licensing+{postcode}")
 
 # Tabs
 tab1, tab2 = st.tabs(["🔍 All Results", "⭐ Favourites Only"])
